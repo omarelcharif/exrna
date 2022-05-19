@@ -1,0 +1,8 @@
+channels:
+  - bioconda
+  - conda-forge
+dependencies:
+  - snakemake-minimal >=5.24.1
+  - cutadapt =2.3
+  - fastx_toolkit
+

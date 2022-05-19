@@ -1,0 +1,28 @@
+## User-defined parameters
+adapterSeq = "GTGGCC GTNTCC"  #string of multiple adapter sequences separated by space
+fastq_encoding = "33"         #fastx quality encoder (33 for Sanger offset)
+configfile: "env/config.yaml" #path to configfile
+
+
+rule cut_adapter:	
+	input: 
+		"plasma_mirna_samples/{sample}.fastq.gz"
+	output:
+		"plasma_mirna_samples/{sample}.noadapt.fastq.gz"
+	conda:
+		"env/align.yaml"
+	shell:
+		"cutadapt -a "+adapterSeq.replace(" ", " -a ")+" -m 1 -o {output} {input}"
+
+rule filter_qual:
+	input: 
+		"plasma_mirna_samples/{sample}.noadapt.fastq.gz"
+	output:
+		"plasma_mirna_samples/{sample}.noadapt.qcfilt.fastq.gz"
+	conda:
+		"env/align.yaml"
+	shell:
+		"zcat < {input} | fastq_quality_filter -Q"+fastq_encoding+" -v TRUE "
+		"-q "+str(config["fastqc"][1])+" -p "+str(config["fastqc"][0])+" -z -o {output}"
+
+

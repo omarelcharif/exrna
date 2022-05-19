@@ -1,0 +1,11 @@
+samples:
+  - plasma_mirna_samples/300_GTGGCC_L007_R1_0001
+  - plasma_mirna_samples/300_GTGGCC_L007_R1_0002
+
+fastqc:
+# QCfilter_percent:
+  - 80
+# QCfilter_min_qual: 
+  - 20 
+
+
